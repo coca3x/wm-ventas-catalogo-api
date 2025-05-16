@@ -12,7 +12,8 @@ package-lock.json
 coverage
 
 # Environment variables
-.env
+.env*
+!.env.example
 
 # Database scripts backup
 src/DB/*

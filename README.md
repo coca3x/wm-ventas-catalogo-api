@@ -59,9 +59,7 @@ wm-ventas-catalogo-api/
 │
 ├── tests/                    # Tests directory
 │   ├── unit/
-│   ├── integration/
-│   └── ...
-│
+│   
 ├── .env                      # Environment variables
 ├── .env.example              # Example environment variables
 ├── tsconfig.json             # TypeScript configuration
@@ -79,18 +77,35 @@ cd wm-ventas-catalogo-api
 # Install dependencies
 npm install
 
-# Copy the example environment file and modify as needed
-cp .env.example .env
-
 # Start the development server
 npm run dev
+```
+
+## Environment Configuration
+
+This project supports multiple environments through different `.env` files:
+
+- `.env.dev` - Development environment
+- `.env.stage` - Staging environment
+- `.env.production` - Production environment
+
+To use a specific environment:
+
+```bash
+# Development
+npm run dev          # Uses .env.dev
+
+# Staging
+npm run dev:stage    # Uses .env.stage
+
+# Production build and start
+npm run build
+npm run start        # Uses .env.production
 ```
 
 ## Scripts
 
 ```bash
-# Start the server in development mode
-npm run dev
 
 # Compile TypeScript
 npm run build

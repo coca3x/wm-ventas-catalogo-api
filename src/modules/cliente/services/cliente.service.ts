@@ -13,31 +13,31 @@ export class ClienteService {
     }
 
     async getClienteByNIT(nit: string): Promise<ICliente | null> {
-        if (!nit || nit.trim() === '') {
+        if (!nit) {
             throw new Error('NIT no válido');
         }
 
-        return await this.repository.findByNIT(nit.trim());
+        return await this.repository.findByNIT(nit);
     }
 
     async createCliente(clienteData: ICliente): Promise<ICliente> {
-        if (!clienteData.NIT || clienteData.NIT.trim() === '') {
+        if (!clienteData.NIT) {
             throw new Error('El NIT es obligatorio');
         }
 
-        if (!clienteData.NombreCompleto || clienteData.NombreCompleto.trim() === '') {
+        if (!clienteData.NombreCompleto) {
             throw new Error('El nombre completo es obligatorio');
         }
 
-        if (!clienteData.Telefono || clienteData.Telefono.trim() === '') {
+        if (!clienteData.Telefono) {
             throw new Error('El teléfono es obligatorio');
         }
 
         const cliente: ICliente = {
-            NIT: clienteData.NIT.trim(),
-            NombreCompleto: clienteData.NombreCompleto.trim(),
-            Telefono: clienteData.Telefono.trim(),
-            CorreoElectronico: clienteData.CorreoElectronico ? clienteData.CorreoElectronico.trim() : undefined
+            NIT: clienteData.NIT,
+            NombreCompleto: clienteData.NombreCompleto,
+            Telefono: clienteData.Telefono,
+            CorreoElectronico: clienteData.CorreoElectronico
         };
 
         const existingCliente = await this.repository.findByNIT(cliente.NIT);
@@ -49,7 +49,7 @@ export class ClienteService {
     }
 
     async updateCliente(clienteData: ICliente): Promise<boolean> {
-        if (!clienteData.NIT || clienteData.NIT.trim() === '') {
+        if (!clienteData.NIT) {
             throw new Error('El NIT es obligatorio');
         }
 
@@ -59,17 +59,17 @@ export class ClienteService {
         }
 
         const cliente: ICliente = {
-            NIT: clienteData.NIT.trim(),
-            NombreCompleto: clienteData.NombreCompleto ? clienteData.NombreCompleto.trim() : existingCliente.NombreCompleto,
-            Telefono: clienteData.Telefono ? clienteData.Telefono.trim() : existingCliente.Telefono,
-            CorreoElectronico: clienteData.CorreoElectronico ? clienteData.CorreoElectronico.trim() : existingCliente.CorreoElectronico
+            NIT: clienteData.NIT,
+            NombreCompleto: clienteData.NombreCompleto || existingCliente.NombreCompleto,
+            Telefono: clienteData.Telefono || existingCliente.Telefono,
+            CorreoElectronico: clienteData.CorreoElectronico || existingCliente.CorreoElectronico
         };
 
         return await this.repository.update(cliente);
     }
 
     async deleteCliente(nit: string): Promise<boolean> {
-        if (!nit || nit.trim() === '') {
+        if (!nit) {
             throw new Error('NIT no válido');
         }
 
