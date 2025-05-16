@@ -12,7 +12,7 @@
     "dev:stage": "cross-env NODE_ENV=stage ts-node-dev --respawn --transpile-only src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --collectCoverage --watchAll"
   },
   "dependencies": {
     "cors": "^2.8.5",
