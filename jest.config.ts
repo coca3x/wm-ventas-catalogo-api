@@ -17,7 +17,9 @@ const config: Config = {
     ],
     collectCoverageFrom: [
         'src/modules/cliente/controllers/**/*.ts',
-        'src/modules/cliente/services/**/*.ts'
+        'src/modules/cliente/services/**/*.ts',
+        'src/modules/producto/controllers/**/*.ts',
+        'src/modules/producto/services/**/*.ts'
     ],
     moduleDirectories: ['node_modules', 'src']
 };
