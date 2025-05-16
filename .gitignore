@@ -1,7 +1,18 @@
+# Build output
 dist/**/*
+
+# IDE files
 .vscode/**/*
+
+# Dependencies
 node_modules
-coverage
 package-lock.json
-undefined
+
+# Testing
+coverage
+
+# Environment variables
+.env
+
+# Database scripts backup
 src/DB/*

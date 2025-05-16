@@ -1,5 +1,5 @@
-import { ICliente } from '../interfaces/Cliente.interface';
-import { ClienteRepository } from '../repositories/Cliente.repository';
+import { ICliente } from '../interfaces/cliente.interface';
+import { ClienteRepository } from '../repositories/cliente.repository';
 
 export class ClienteService {
     private repository: ClienteRepository;

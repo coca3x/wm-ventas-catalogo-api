@@ -1,5 +1,5 @@
-import { pool, sql } from '../config/database';
-import { ICliente, IClienteRepository } from '../interfaces/Cliente.interface';
+import { pool, sql } from '../../../config/database';
+import { ICliente, IClienteRepository } from '../interfaces/cliente.interface';
 
 export class ClienteRepository implements IClienteRepository {
 
