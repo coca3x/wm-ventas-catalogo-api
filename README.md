@@ -64,7 +64,7 @@ DB_HOST=localhost
 DB_PORT=1433
 DB_USER=username
 DB_PASSWORD=password
-DB_NAME=VentasCatalogo
+DB_NAME=DBname
 ```
 
 ## Testing
