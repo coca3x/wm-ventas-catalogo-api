@@ -21,7 +21,9 @@ const config: Config = {
         'src/modules/producto/controllers/**/*.ts',
         'src/modules/producto/services/**/*.ts',
         'src/modules/descuento/controllers/**/*.ts',
-        'src/modules/descuento/services/**/*.ts'
+        'src/modules/descuento/services/**/*.ts',
+        'src/modules/venta/controllers/**/*.ts',
+        'src/modules/venta/services/**/*.ts'
     ],
     moduleDirectories: ['node_modules', 'src']
 };
