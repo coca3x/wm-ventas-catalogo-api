@@ -19,7 +19,9 @@ const config: Config = {
         'src/modules/cliente/controllers/**/*.ts',
         'src/modules/cliente/services/**/*.ts',
         'src/modules/producto/controllers/**/*.ts',
-        'src/modules/producto/services/**/*.ts'
+        'src/modules/producto/services/**/*.ts',
+        'src/modules/descuento/controllers/**/*.ts',
+        'src/modules/descuento/services/**/*.ts'
     ],
     moduleDirectories: ['node_modules', 'src']
 };
