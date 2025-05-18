@@ -6,6 +6,21 @@ import descuentoRouter from './modules/descuento/routes';
 import ventaRouter from './modules/venta/routes';
 import reporteRouter from './modules/reporte/routes';
 
+/**
+ * @swagger
+ * tags:
+ *   - name: Clientes
+ *     description: Operaciones relacionadas con clientes
+ *   - name: Productos
+ *     description: Operaciones relacionadas con productos
+ *   - name: Descuentos
+ *     description: Operaciones relacionadas con descuentos
+ *   - name: Ventas
+ *     description: Operaciones relacionadas con ventas
+ *   - name: Reportes
+ *     description: Operaciones relacionadas con reportes
+ */
+
 const router = Router();
 
 router.use('/healthcheck', healthCheckRouter);

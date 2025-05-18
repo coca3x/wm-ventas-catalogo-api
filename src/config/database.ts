@@ -1,53 +1,45 @@
 import sql from 'mssql';
-import { loadEnv } from './env';
+import { config } from './config';
 
-// Carga variables de entorno
-loadEnv();
-
-const sqlConfig = {
-    user: process.env.DB_USER || 'sa',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'WMVentasCatalogo',
-    server: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT || '1433', 10),
+// Pool de conexiones para SQL Server
+export const pool = new sql.ConnectionPool({
+    ...config.DB_CONFIG,
+    options: {
+        ...config.DB_CONFIG.options,
+        connectTimeout: 30000,
+        requestTimeout: 30000
+    },
     pool: {
         max: 10,
         min: 0,
         idleTimeoutMillis: 30000
-    },
-    options: {
-        encrypt: false,
-        trustServerCertificate: true
     }
-};
+});
 
-const pool = new sql.ConnectionPool(sqlConfig);
+// Función para conectar a la base de datos con reintentos
+export const connectDB = async (): Promise<void> => {
+    let attempts = 0;
+    const maxAttempts = config.DB_RETRY_ATTEMPTS;
+    const delayMs = config.DB_RETRY_DELAY_MS;
 
-const connectDB = async () => {
-    // Reintentos a BD
-    const maxRetries = parseInt(process.env.DB_RETRY_ATTEMPTS || '3', 10);
-    const retryDelay = parseInt(process.env.DB_RETRY_DELAY_MS || '5000', 10);
-    let retries = 0;
-
-    while (retries <= maxRetries) {
+    while (attempts < maxAttempts) {
         try {
+            console.log(`Intentando conectar a la base de datos (intento ${attempts + 1}/${maxAttempts})...`);
             await pool.connect();
-            console.log(`Conexión a SQL Server (${process.env.DB_HOST}) establecida correctamente`);
-            return pool;
-        } catch (error) {
-            retries++;
+            console.log('Conexión exitosa a la base de datos');
+            return;
+        } catch (err) {
+            attempts++;
+            console.error(`Error al conectar con la base de datos (intento ${attempts}/${maxAttempts}):`, err);
 
-            if (retries > maxRetries) {
-                console.error(`Agotados todos los intentos (${maxRetries}) de conexión a SQL Server:`, error);
-                throw error;
+            if (attempts >= maxAttempts) {
+                console.error('Se alcanzó el número máximo de intentos de conexión');
+                throw err;
             }
 
-            console.warn(`Intento ${retries} de ${maxRetries} fallido. Reintentando en ${retryDelay}ms...`);
-            await new Promise(resolve => setTimeout(resolve, retryDelay));
+            console.log(`Reintentando en ${delayMs / 1000} segundos...`);
+            await new Promise(resolve => setTimeout(resolve, delayMs));
         }
     }
-
-    return pool;
 };
-
-export { sql, pool, connectDB };
+export { sql };
